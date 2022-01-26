@@ -58,12 +58,6 @@
 
 - `lsof` 来查看开启的套接字和文件。
 
-- 使用 `uptime` 或 `w` 来查看系统已经运行多长时间。
-
-- 使用 `alias` 来创建常用命令的快捷形式。例如：`alias ll='ls -latr'` 创建了一个新的命令别名 `ll`。
-
-- 可以把别名、shell 选项和常用函数保存在 `~/.bashrc`，具体看下这篇[文章](http://superuser.com/a/183980/7106)。这样做的话你就可以在所有 shell 会话中使用你的设定。
-
 - 把环境变量的设定以及登陆时要执行的命令保存在 `~/.bash_profile`。而对于从图形界面启动的 shell 和 `cron` 启动的 shell，则需要单独配置文件。
 
 - 当变量和文件名中包含空格的时候要格外小心。Bash 变量要用引号括起来，比如 `"$FOO"`。尽量使用 `-0` 或 `-print0` 选项以便用 NULL 来分隔文件名，例如 `locate -0 pattern | xargs -0 ls -al` 或 `find / -print0 -type d | xargs -0 ls -al`。如果 for 循环中循环访问的文件名含有空字符（空格、tab 等字符），只需用 `IFS=$'\n'` 把内部字段分隔符设为换行符。
@@ -77,11 +71,6 @@
 - 在 Bash 中，变量有许多的扩展方式。`${name:?error message}` 用于检查变量是否存在。此外，当 Bash 脚本只需要一个参数时，可以使用这样的代码 `input_file=${1:?usage: $0 input_file}`。在变量为空时使用默认值：`${name:-default}`。如果你要在之前的例子中再加一个（可选的）参数，可以使用类似这样的代码 `output_file=${2:-logfile}`，如果省略了 $2，它的值就为空，于是 `output_file` 就会被设为 `logfile`。数学表达式：`i=$(( (i + 1) % 5 ))`。序列：`{1..10}`。截断字符串：`${var%suffix}` 和 `${var#prefix}`。例如，假设 `var=foo.pdf`，那么 `echo ${var%.pdf}.txt` 将输出 `foo.txt`。
 
 - 使用括号扩展（`{`...`}`）来减少输入相似文本，并自动化文本组合。这在某些情况下会很有用，例如 `mv foo.{txt,pdf} some-dir`（同时移动两个文件），`cp somefile{,.bak}`（会被扩展成 `cp somefile somefile.bak`）或者 `mkdir -p test-{a,b,c}/subtest-{1,2,3}`（会被扩展成所有可能的组合，并创建一个目录树）。
-
-- 通过使用 `<(some command)` 可以将输出视为文件。例如，对比本地文件 `/etc/hosts` 和一个远程文件：
-```sh
-      diff /etc/hosts <(ssh somehost cat /etc/hosts)
-```
 
 - 了解 Bash 中的“here documents”，例如 `cat <<EOF ...`。
 
@@ -281,10 +270,6 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 
 - `seq`：打印数字
 
-- `bc`：计算器
-
-- `factor`：分解因数
-
 - [`gpg`](https://gnupg.org/)：加密并签名文件
 
 - `toe`：terminfo 入口列表
@@ -301,11 +286,7 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 
 - `stat`：文件信息
 
-- `time`：执行命令，并计算执行时间
-
 - `timeout`：在指定时长范围内执行命令，并在规定时间结束后停止进程
-
-- `lockfile`：使文件只能通过 `rm -f` 移除
 
 - `logrotate`： 切换、压缩以及发送日志文件
 
@@ -321,17 +302,11 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 
 - `strings`：从二进制文件中抽取文本
 
-- `tr`：转换字母
-
 - `iconv` 或 `uconv`：文本编码转换
 
 - `split` 和 `csplit`：分割文件
 
 - `sponge`：在写入前读取所有输入，在读取文件后再向同一文件写入时比较有用，例如 `grep -v something some-file | sponge some-file`
-
-- `units`：将一种计量单位转换为另一种等效的计量单位（参阅 `/usr/share/units/definitions.units`）
-
-- `apg`：随机生成密码
 
 - `xz`：高比例的文件压缩
 
@@ -374,10 +349,6 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 - [`iftop`](http://www.ex-parrot.com/~pdw/iftop/) 或 [`nethogs`](https://github.com/raboof/nethogs)：套接字及进程的网络利用情况
 
 - `ss`：套接字数据
-
-- `dmesg`：引导及系统错误信息
-
-- `sysctl`： 在内核运行时动态地查看和修改内核的运行参数
 
 - `lsblk`：列出块设备信息：以树形展示你的磁盘以及磁盘分区信息
 
